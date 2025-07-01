@@ -1,8 +1,7 @@
 const BewerberFormStep4 = ({ formData, handleChange }) => {
   return (
     <div className="form-step">
-      <div className="form-row">
-      </div>
+      <div className="form-row"></div>
     </div>
   );
 };

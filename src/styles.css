@@ -21,11 +21,11 @@ body {
   overflow: hidden;
 }
 .sidebar {
-  width: 400px;
+  width: 450px;
   background: #fff;
   border-right: 2px solid #e0e0e0;
   overflow-y: auto;
-  min-width: 340px;
+  min-width: 420px;
 }
 .form-area {
   flex: 1;
@@ -86,8 +86,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px 0 10px;
-  min-height: 30px;
+  padding: 16px 24px 16px 10px;
+  min-height: 50px;
 }
 .header-bar-logo-title {
   display: flex;
@@ -97,20 +97,18 @@ body {
   width: 36px;
   height: 36px;
   margin-right: 12px;
-  background: #fff;
-  border-radius: 6px;
   object-fit: contain;
 }
 .header-bar-title {
-
-  font-weight: 500;
-  margin-top: 10px;
+  font-weight: 400;
+  margin-bottom: 10px;
 }
 .header-bar-sub {
   color: #ff9900;
   font-size: 1.1rem;
   font-weight: 400;
   margin-bottom: 2px;
+  margin-top: 8px;
 }
 .header-bar-sub2 {
   font-size: 0.8rem;
@@ -150,6 +148,7 @@ body {
   gap: 16px;
   margin: 0;
   border-bottom: none;
+  overflow: visible;
 }
 .header-bar-filter-info {
   display: flex;
@@ -184,6 +183,7 @@ body {
   position: relative;
   height: 60px;
   justify-content: center;
+  overflow: visible;
 }
 .filter-label {
   color: #2684ff;
@@ -252,12 +252,25 @@ body {
   border-bottom: 1px solid #f0f0f0;
   font-size: 0.85rem;
   background: #ffffff;
+  color: #444;
 }
 
+.BewerberTabelle tr.selected {
+  background: #f0f8ff !important;
+}
+
+.BewerberTabelle tr.selected td {
+  color: #444 !important;
+  background-color: #c8dbf5 !important;
+}
+
+.BewerberTabelle tr:hover:not(.selected) {
+  background-color: #f0f8ff;
+}
 
 .BewerberTabelle tr td:first-child {
   font-weight: 600;
-  color: #222;
+  color: #444;
 }
 
 /* Form Steps */
@@ -359,11 +372,11 @@ body {
   transition: background 0.2s, opacity 0.2s;
 }
 .btn-primary {
-  background: #93979c;
+  background: #166fe5;
   color: #fff;
 }
 .btn-primary:hover {
-  background: #166fe5;
+  background: #80aeeb;
 }
 .btn-secondary {
   background: #e0e0e0;
@@ -373,11 +386,11 @@ body {
   background: #d0d0d0;
 }
 .btn-success {
-  background: #28a745;
+  background: #9d9e9d;
   color: #fff;
 }
 .btn-success:hover {
-  background: #218838;
+  background: #166fe5;
 }
 
 /* Navigation Buttons Container */
@@ -584,4 +597,18 @@ body {
   z-index: 11;
   background: transparent;
 }
+
+.BewerberTabelle tr.selected {
+  background-color: #c8dbf5 !important;
+}
+
+.BewerberTabelle tr.selected td {
+  color: #444 !important;
+  background-color: #c8dbf5 !important;
+}
+
+.BewerberTabelle tr:hover:not(.selected) {
+  background-color: #f0f8ff;
+}
+
 
