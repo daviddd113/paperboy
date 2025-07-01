@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { useRef, useEffect } from 'react';
 import * as ExcelJS from 'exceljs';
+import logo from '../../assets/images/Logo_invertiert_transparent.png'; // Korrekter Pfad zum Logo
 
 const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
   const [filterTypes, setFilterTypes] = useState([
@@ -946,7 +947,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
       <div className="header-bar-top">
         <div className="header-bar-logo-title">
           <img 
-            src={`${process.env.PUBLIC_URL}/Logo_invertiert_transparent.png`} // Verwende PUBLIC_URL für Production
+            src={logo} // Verwende das importierte Logo
             alt="Logo" 
             className="header-bar-logo"
             style={{
