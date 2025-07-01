@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/paperboy/static/css/main.448945fc.css",
-    "main.js": "/paperboy/static/js/main.215c6549.js",
+    "main.js": "/paperboy/static/js/main.cf300aeb.js",
     "index.html": "/paperboy/index.html",
     "main.448945fc.css.map": "/paperboy/static/css/main.448945fc.css.map",
-    "main.215c6549.js.map": "/paperboy/static/js/main.215c6549.js.map"
+    "main.cf300aeb.js.map": "/paperboy/static/js/main.cf300aeb.js.map"
   },
   "entrypoints": [
     "static/css/main.448945fc.css",
-    "static/js/main.215c6549.js"
+    "static/js/main.cf300aeb.js"
   ]
 }
