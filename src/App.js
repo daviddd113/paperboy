@@ -374,8 +374,9 @@ const App = () => {
               alignItems: 'center',
               justifyContent: 'center',
               height: '400px',
-              color: '#888',
-              fontSize: '18px'
+              color: '#bbb',
+              fontSize: '18px',
+              fontWeight: '500',
             }}>
               Wählen Sie einen Eintrag aus der Tabelle aus
             </div>

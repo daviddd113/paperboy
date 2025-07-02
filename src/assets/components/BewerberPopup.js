@@ -19,10 +19,9 @@ function AufenthaltstitelPopup({ open, onClose, onSave }) {
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.18)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ background: '#fff', borderRadius: 8, width: 420, minHeight: 320, boxShadow: '0 4px 32px #0002', padding: '32px 32px 24px 32px', position: 'relative', display: 'flex', flexDirection: 'column', gap: 18, zIndex: 3010 }}>
         <button onClick={onClose} style={{ position: 'absolute', top: 12, right: 18, background: 'none', border: 'none', fontSize: 26, color: '#888', cursor: 'pointer' }}>×</button>
-        <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#888', marginBottom: 8 }}>AUFENTHALTSTITEL HINZUFÜGEN</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <label style={{ fontWeight: 600, fontSize: '0.9rem', marginBottom: 2 }}>AUFENTHALTSTITEL</label>
-          <select value={titel} onChange={e => setTitel(e.target.value)} style={{ width: '100%', fontSize: '0.9rem', height: 40 }}>
+          <select value={titel} onChange={e => setTitel(e.target.value)} style={{ width: '100%', fontSize: '0.9rem', height: 30 }}>
             <option value=""> </option>
             <option value="Niederlassungsbewilligung">Niederlassungsbewilligung</option>
             <option value="Daueraufenthalt">Daueraufenthalt</option>
@@ -54,7 +53,6 @@ function AsylStatusPopup({ open, onClose, onSave }) {
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.18)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ background: '#fff', borderRadius: 8, width: 420, minHeight: 240, boxShadow: '0 4px 32px #0002', padding: '32px 32px 24px 32px', position: 'relative', display: 'flex', flexDirection: 'column', gap: 18, zIndex: 3010 }}>
         <button onClick={onClose} style={{ position: 'absolute', top: 12, right: 18, background: 'none', border: 'none', fontSize: 26, color: '#888', cursor: 'pointer' }}>×</button>
-        <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#888', marginBottom: 8 }}>ASYL-STATUS HINZUFÜGEN</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <label style={{ fontWeight: 600, fontSize: '0.9rem', marginTop: 10 }}>GÜLTIG BIS</label>
           <input type="date" value={gueltigBis} onChange={e => setGueltigBis(e.target.value)} style={{ width: '100%', fontSize: '1rem', height: 28 }} />
@@ -74,7 +72,6 @@ function KennzeichenPopup({ open, onClose, onSave }) {
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.18)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ background: '#fff', borderRadius: 8, width: 420, minHeight: 140, boxShadow: '0 4px 32px #0002', padding: '32px 32px 24px 32px', position: 'relative', display: 'flex', flexDirection: 'column', gap: 18, zIndex: 3010 }}>
         <button onClick={onClose} style={{ position: 'absolute', top: 12, right: 18, background: 'none', border: 'none', fontSize: 26, color: '#888', cursor: 'pointer' }}>×</button>
-        <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#888', marginBottom: 8 }}>KENNZEICHEN HINZUFÜGEN</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <label style={{ fontWeight: 600, fontSize: '0.9rem', marginBottom: 2 }}>KENNZEICHEN</label>
           <input value={kennzeichen} onChange={e => setKennzeichen(e.target.value)} style={{ width: '100%', fontSize: '1rem', height: 28 }} />
