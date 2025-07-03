@@ -1,14 +1,12 @@
 {
   "files": {
-    "main.css": "/paperboy/static/css/main.448945fc.css",
-    "main.js": "/paperboy/static/js/main.d6492c56.js",
+    "main.css": "/paperboy/static/css/main.0c24a2c4.css",
+    "main.js": "/paperboy/static/js/main.1c9cab2a.js",
     "static/media/Logo_invertiert_transparent.png": "/paperboy/static/media/Logo_invertiert_transparent.90647c0e57d4edda9c25.png",
-    "index.html": "/paperboy/index.html",
-    "main.448945fc.css.map": "/paperboy/static/css/main.448945fc.css.map",
-    "main.d6492c56.js.map": "/paperboy/static/js/main.d6492c56.js.map"
+    "index.html": "/paperboy/index.html"
   },
   "entrypoints": [
-    "static/css/main.448945fc.css",
-    "static/js/main.d6492c56.js"
+    "static/css/main.0c24a2c4.css",
+    "static/js/main.1c9cab2a.js"
   ]
 }
