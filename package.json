@@ -22,9 +22,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:safe": "GENERATE_SOURCEMAP=false CI=false react-scripts build",
+    "build:minimal": "GENERATE_SOURCEMAP=false CI=false INLINE_RUNTIME_CHUNK=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build:minimal",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
