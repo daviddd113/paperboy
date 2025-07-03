@@ -6,6 +6,7 @@ import BewerberFormStep2 from './assets/components/BewerberFormStep2';
 import BewerberFormStep3 from './assets/components/BewerberFormStep3';
 import BewerberFormStep4 from './assets/components/BewerberFormStep4';
 import BewerberTabelle from './assets/components/BewerberTabelle';
+import AgendaSidebar from './assets/components/AgendaSidebar';
 
 const leeresFormular = () => ({
   vorname: '',
@@ -127,6 +128,7 @@ const App = () => {
   const [eintraege, setEintraege] = useState(standardEintraege);
   const [selectedId, setSelectedId] = useState(1001);
   const [filteredEintraege, setFilteredEintraege] = useState(standardEintraege());
+  const [agendaOpen, setAgendaOpen] = useState(false);
 
   // Filter-Handler
   const handleFilterChange = (filtered) => {
@@ -383,6 +385,13 @@ const App = () => {
           )}
         </main>
       </div>
+      
+      {/* Agenda Sidebar */}
+      <AgendaSidebar 
+        eintraege={eintraege}
+        isOpen={agendaOpen}
+        onToggle={() => setAgendaOpen(!agendaOpen)}
+      />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { useRef, useEffect } from 'react';
 import * as ExcelJS from 'exceljs';
 import logo from '../../assets/images/Logo_invertiert_transparent.png'; // Korrekter Pfad zum Logo
+import feibraLogo from '../../assets/images/feibra-logo-small.png'; // Feibra Logo importieren
 
 const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
   const [filterTypes, setFilterTypes] = useState([
@@ -585,6 +586,9 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
   // Tatsächlichen Druck ausführen - HTML-VERSION
   const executeActualPrint = async () => {
     try {
+      // Logo als Base64 konvertieren für den Druck
+      const logoBase64 = await convertImageToBase64(feibraLogo);
+      
       // Aktuelles Datum für Header
       const heute = new Date();
       const wochentag = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'][heute.getDay()];
@@ -618,6 +622,15 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
             
             .header {
               margin-bottom: 25px;
+              position: relative;
+            }
+            
+            .header-logo {
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 120px;
+              height: auto;
             }
             
             .title {
@@ -625,6 +638,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
               font-weight: bold;
               margin-bottom: 12px;
               color: #000;
+              margin-right: 130px;
             }
             
             .date {
@@ -713,6 +727,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
         <body>
           <div class="container">
             <div class="header">
+              <img src="${logoBase64}" alt="Feibra Logo" class="header-logo" />
               <div class="title">Termine - Bewerber</div>
               <div class="date">${datumStr}</div>
               <div class="date-line"></div>
@@ -779,6 +794,25 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
     }
   };
 
+  // Hilfsfunktion zum Konvertieren des Bildes zu Base64
+  const convertImageToBase64 = (imagePath) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL('image/png');
+        resolve(dataURL);
+      };
+      img.onerror = reject;
+      img.src = imagePath;
+    });
+  };
+
   // Hilfsfunktion für deutsches Datumsformat im Export
   const formatDateForExport = (dateStr) => {
     if (!dateStr) return '';
@@ -794,7 +828,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Bewerber');
 
-      // Spalten definieren - ERWEITERT um alle Formularfelder
+      // Spalten definieren
       worksheet.columns = [
         { header: 'Nr', key: 'nr', width: 10 },
         { header: 'Name', key: 'name', width: 25 },
@@ -827,7 +861,6 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
 
       // Header-Stil
       worksheet.getRow(1).font = { bold: true };
-      // Entferne die Hintergrundfarbe komplett - keine Füllung
       // worksheet.getRow(1).fill = {
       //   type: 'pattern',
       //   pattern: 'solid',
@@ -868,7 +901,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
         });
       });
 
-      // Autofilter hinzufügen - angepasst für erweiterte Spalten
+      // Autofilter hinzufügen
       worksheet.autoFilter = 'A1:AA1';
 
       // Excel-Datei generieren und downloaden
@@ -884,7 +917,6 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
       link.click();
       window.URL.revokeObjectURL(url);
       
-      console.log('Excel-Export erfolgreich!');
     } catch (error) {
       console.error('Fehler beim Excel-Export:', error);
       alert('Fehler beim Exportieren der Excel-Datei');
@@ -893,7 +925,6 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
 
   // Drucken-Funktion - zeigt Popup zur Bestätigung
   const handlePrint = async () => {
-    console.log('🖨️ handlePrint wurde aufgerufen');
     try {
       // Daten für Druck vorbereiten
       const preparedData = [];
@@ -929,15 +960,13 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
         return dateA - dateB;
       });
       
-      console.log('📊 Vorbereitete Druckdaten:', preparedData.length, 'Termine');
       
       // Daten speichern und Popup anzeigen
       setPrintData(preparedData);
       setShowPrintPopup(true);
-      console.log('✅ Popup sollte jetzt angezeigt werden');
       
     } catch (error) {
-      console.error('❌ Fehler beim Vorbereiten des Drucks:', error);
+      console.error('Fehler beim Vorbereiten des Drucks:', error);
       alert('Fehler beim Vorbereiten der Druckdaten.');
     }
   };
