@@ -9,15 +9,19 @@ const AgendaSidebar = ({ eintraege, isOpen, onToggle }) => {
   const agendaItems = useMemo(() => {
     const items = [];
     const heute = new Date();
-    const maxDate = new Date();
+    heute.setHours(0, 0, 0, 0); // Setze auf Mitternacht für saubere Vergleiche
+    
+    const maxDate = new Date(heute);
     maxDate.setDate(heute.getDate() + filterDays);
 
     eintraege.forEach(eintrag => {
       const formData = eintrag.formData;
       
-      // Bewerbungstermine
+      // Bewerbungstermine - nur wenn erschienen LEER ist
       if (formData.datumTermin && formData.uhrzeitTermin && !formData.erschienen) {
-        const terminDate = new Date(formData.datumTermin);
+        const [year, month, day] = formData.datumTermin.split('-').map(Number);
+        const terminDate = new Date(year, month - 1, day);
+        
         if (terminDate >= heute && terminDate <= maxDate) {
           items.push({
             datum: formData.datumTermin,
@@ -31,9 +35,11 @@ const AgendaSidebar = ({ eintraege, isOpen, onToggle }) => {
         }
       }
 
-      // Infotage
-      if (formData.infotag && formData.uhrzeit) {
-        const infotagDate = new Date(formData.infotag);
+      // Infotage - nur wenn erschienen = "Ja"
+      if (formData.erschienen === 'Ja' && formData.infotag && formData.uhrzeit) {
+        const [year, month, day] = formData.infotag.split('-').map(Number);
+        const infotagDate = new Date(year, month - 1, day);
+        
         if (infotagDate >= heute && infotagDate <= maxDate) {
           items.push({
             datum: formData.infotag,
@@ -73,20 +79,22 @@ const AgendaSidebar = ({ eintraege, isOpen, onToggle }) => {
 
   // Datum formatieren
   const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     const heute = new Date();
-    const morgen = new Date();
+    heute.setHours(0, 0, 0, 0);
+    const morgen = new Date(heute);
     morgen.setDate(heute.getDate() + 1);
 
-    if (date.toDateString() === heute.toDateString()) {
+    if (date.getTime() === heute.getTime()) {
       return 'Heute';
-    } else if (date.toDateString() === morgen.toDateString()) {
+    } else if (date.getTime() === morgen.getTime()) {
       return 'Morgen';
     } else {
       const weekdays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      return `${weekdays[date.getDay()]}, ${day}.${month}`;
+      const dayStr = day.toString().padStart(2, '0');
+      const monthStr = month.toString().padStart(2, '0');
+      return `${weekdays[date.getDay()]}, ${dayStr}.${monthStr}`;
     }
   };
 

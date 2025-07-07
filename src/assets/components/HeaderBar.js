@@ -847,7 +847,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
         { header: 'Datum Termin', key: 'datumTermin', width: 15 },
         { header: 'Uhrzeit Termin', key: 'uhrzeitTermin', width: 15 },
         { header: 'Kein Termin', key: 'keinTermin', width: 12 },
-        { header: 'Grund Termin', key: 'grundTermin', width: 25 },
+        { header: 'Grund Kein Termin', key: 'grundTermin', width: 25 },
         { header: 'Status', key: 'step', width: 8 },
         { header: 'Erschienen', key: 'erschienen', width: 12 },
         { header: 'Informationstag', key: 'infotag', width: 15 },
