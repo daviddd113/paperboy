@@ -23,7 +23,7 @@ const AgendaSidebar = ({ eintraege, isOpen, onToggle }) => {
         if (terminDate >= heute && terminDate <= maxDate) {
           items.push({
             datum: formData.datumTermin,
-            uhrzeit: formData.uhrzeitTermin,
+            uhrzeit: formData.uhrzeitTermin, // <-- Korrigiert: uhrzeitTermin statt uhrzeit
             typ: 'Bewerbung',
             name: `${formData.vorname || ''} ${formData.nachname || ''}`.trim(),
             filiale: formData.filiale,

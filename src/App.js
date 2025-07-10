@@ -17,14 +17,24 @@ const leeresFormular = () => ({
   auto: '',
   euBuerger: '',
   region: '',
+  erhalten: '',
+  kontaktdatum: '',
+  kontaktaufnahme: '',
+  keinTermin: false,
+  grundTermin: '',
+  filiale: '',
+  datumTermin: '',
+  uhrzeitTermin: '',
   erschienen: '',
   infotag: '',
   uhrzeit: '',
+  einschuler: '',
   auftrag: '',
   grund: '',
-  filiale: '',
+  anmerkung: '',
+  verteilernr: '',
   anzahlTermine: 0,
-  termineHistorie: [] // Neue Historie für Termine
+  termineHistorie: []
 });
 
 // Standardeinträge mit vorbefüllten Daten
@@ -43,13 +53,22 @@ const standardEintraege = () => [
       region: 'Wien',
       erhalten: 'Telefonisch',
       kontaktdatum: '2025-06-30',
+      kontaktaufnahme: '',
+      keinTermin: false,
+      grundTermin: '',
       filiale: 'Fil01',
       datumTermin: '2025-07-09',
       uhrzeitTermin: '09:00',
       erschienen: 'Ja',
+      infotag: '',
+      uhrzeit: '',
+      einschuler: '',
       auftrag: 'Ja',
       grund: '',
-      anzahlTermine: 0
+      anmerkung: '',
+      verteilernr: '',
+      anzahlTermine: 0,
+      termineHistorie: []
     }
   },
   {
@@ -67,15 +86,21 @@ const standardEintraege = () => [
       erhalten: 'E-Mail',
       kontaktdatum: '2025-07-01',
       kontaktaufnahme: 'Fil02',
+      keinTermin: false,
+      grundTermin: '',
       filiale: 'Fil02',
       datumTermin: '2025-07-10',
       uhrzeitTermin: '14:30',
       erschienen: 'Ja',
-      infotag: '2025-07-014',
+      infotag: '2025-07-14',
       uhrzeit: '10:00',
+      einschuler: '',
       auftrag: '',
       grund: '',
-      anzahlTermine: 0
+      anmerkung: '',
+      verteilernr: '',
+      anzahlTermine: 0,
+      termineHistorie: []
     }
   },
   {
@@ -92,13 +117,22 @@ const standardEintraege = () => [
       region: 'Salzburg',
       erhalten: 'HiTalent',
       kontaktdatum: '2025-07-03',
+      kontaktaufnahme: '',
+      keinTermin: false,
+      grundTermin: '',
       filiale: 'Fil03',
       datumTermin: '2025-07-11',
       uhrzeitTermin: '11:00',
       erschienen: '',
+      infotag: '',
+      uhrzeit: '',
+      einschuler: '',
       auftrag: '',
       grund: '',
-      anzahlTermine: 0
+      anmerkung: '',
+      verteilernr: '',
+      anzahlTermine: 0,
+      termineHistorie: []
     }
   }
 ];
@@ -125,10 +159,15 @@ function isStep2Valid(formData) {
 }
 
 const App = () => {
-  const [eintraege, setEintraege] = useState(standardEintraege);
+  const [eintraege, setEintraege] = useState(standardEintraege()); // <-- Korrektur: Funktion aufrufen!
   const [selectedId, setSelectedId] = useState(1001);
-  const [filteredEintraege, setFilteredEintraege] = useState(standardEintraege());
+  const [filteredEintraege, setFilteredEintraege] = useState(standardEintraege()); // <-- Korrektur: Funktion aufrufen!
   const [agendaOpen, setAgendaOpen] = useState(false);
+
+  // Synchronisiere filteredEintraege mit eintraege, wenn sich eintraege ändern und kein Filter aktiv ist
+  useEffect(() => {
+    setFilteredEintraege(eintraege);
+  }, [eintraege]);
 
   // Filter-Handler
   const handleFilterChange = (filtered) => {
