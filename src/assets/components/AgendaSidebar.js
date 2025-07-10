@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from 'react';
 
-const stepColors = ['#2684ff', '#f3581bff', '#d09434', '#a259e6'];
-
 const AgendaSidebar = ({ eintraege, isOpen, onToggle }) => {
   const [filterDays, setFilterDays] = useState(7); // Standard: nächste 7 Tage
 

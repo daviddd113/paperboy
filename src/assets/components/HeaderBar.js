@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { format } from 'date-fns';
-import { useRef, useEffect } from 'react';
 import * as ExcelJS from 'exceljs';
 import logo from '../../assets/images/Logo_invertiert_transparent.png'; // Korrekter Pfad zum Logo
 import feibraLogo from '../../assets/images/feibra-logo-small.png'; // Feibra Logo importieren
@@ -21,16 +20,8 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
     }));
   }
 
-  // Filter-Logik implementieren
-  useEffect(() => {
-    const filteredEintraege = applyFilters(eintraege);
-    if (onFilterChange) {
-      onFilterChange(filteredEintraege);
-    }
-  }, [filterTypes, filterValues, eintraege, onFilterChange]);
-
   // Filter anwenden
-  const applyFilters = (entries) => {
+  const applyFilters = useCallback((entries) => {
     return entries.filter(entry => {
       const formData = entry.formData;
       
@@ -131,7 +122,15 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
       
       return true;
     });
-  };
+  }, [filterTypes, filterValues]);
+
+  // Filter-Logik implementieren
+  useEffect(() => {
+    const filteredEintraege = applyFilters(eintraege);
+    if (onFilterChange) {
+      onFilterChange(filteredEintraege);
+    }
+  }, [filterTypes, filterValues, eintraege, onFilterChange, applyFilters]);
 
   // Hilfsfunktion für deutsches Datumsformat
   const parseGermanDate = (dateStr) => {
@@ -309,61 +308,6 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
     return null;
   }
 
-  // Export-Funktion mit Template
-  const handleExport = async () => {
-    try {
-      // Template laden
-      const response = await fetch('/templates/Export- Druckvorlage.xlsx');
-      if (!response.ok) {
-        throw new Error('Template nicht gefunden');
-      }
-      const templateBuffer = await response.arrayBuffer();
-      
-      // Daten für Export vorbereiten
-      const exportData = [];
-      
-      eintraege.forEach(eintrag => {
-        const formData = eintrag.formData;
-        
-        // Bewerbung-Eintrag (nur wenn Termin vorhanden UND erschienen noch leer ist)
-        if (formData.datumTermin && formData.uhrzeitTermin && !formData.erschienen) {
-          exportData.push({
-            Art: 'Bewerbung',
-            Bewerber: `${formData.vorname || ''} ${formData.nachname || ''}`.trim(),
-            Uhrzeit: formatTime(formData.uhrzeitTermin),
-            Datum: formatDate(formData.datumTermin), // Für Anzeige
-            OriginalDate: formData.datumTermin // Für Export-Formatierung
-          });
-        }
-        
-        // Informationstag-Eintrag (wenn Infotag-Daten vorhanden)
-        if (formData.infotag && formData.uhrzeit) {
-          exportData.push({
-            Art: 'Informationstag', 
-            Bewerber: `${formData.vorname || ''} ${formData.nachname || ''}`.trim(),
-            Uhrzeit: formatTime(formData.uhrzeit),
-            Datum: formatDate(formData.infotag), // Für Anzeige
-            OriginalDate: formData.infotag // Für Export-Formatierung
-          });
-        }
-      });
-      
-      // Nach Datum sortieren
-      exportData.sort((a, b) => {
-        const dateA = new Date(a.OriginalDate);
-        const dateB = new Date(b.OriginalDate);
-        return dateA - dateB;
-      });
-      
-      // Template mit Daten füllen
-      await fillTemplateWithData(templateBuffer, exportData);
-      
-    } catch (error) {
-      console.error('Fehler beim Export:', error);
-      alert('Template nicht gefunden. Stelle sicher, dass die Datei "Export- Druckvorlage.xlsx" im Ordner /public/templates/ liegt.');
-    }
-  };
-
   // Template mit Daten füllen
   const fillTemplateWithData = async (templateBuffer, data) => {
     try {
@@ -417,8 +361,8 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
       URL.revokeObjectURL(url);
       
     } catch (error) {
-      console.error('Fehler beim Bearbeiten der Excel-Datei:', error);
-      throw error;
+      console.error('Fehler beim Export:', error);
+      alert('Template nicht gefunden. Stelle sicher, dass die Datei "Export- Druckvorlage.xlsx" im Ordner /public/templates/ liegt.');
     }
   };
 
@@ -448,39 +392,13 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
     return timeStr + ' Uhr';
   };
 
-  const parseDate = (dateStr) => {
-    if (!dateStr) return new Date(0);
-    const [day, month, year] = dateStr.split('.');
-    return new Date(year, month - 1, day);
-  };
-
   // Entferne das React-Popup komplett und erstelle es per DOM
   const PrintPopup = ({ isOpen, onClose, data }) => {
     return null; // React-Popup deaktiviert
   };
 
-  // Debugging für showPrintPopup State-Änderungen
-  useEffect(() => {
-    if (showPrintPopup) {
-      console.log('🔔 PrintPopup wurde geöffnet mit', printData.length, 'Terminen');
-      
-      // ECHTES POPUP PER DOM-MANIPULATION
-      setTimeout(() => {
-        createDOMPopup();
-      }, 100);
-      
-    } else {
-      console.log('🔕 PrintPopup wurde geschlossen');
-      // Entferne DOM-Popup falls vorhanden
-      const existingPopup = document.getElementById('print-popup-dom');
-      if (existingPopup) {
-        document.body.removeChild(existingPopup);
-      }
-    }
-  }, [showPrintPopup, printData.length]);
-
   // Erstelle funktionierendes DOM-Popup
-  const createDOMPopup = () => {
+  const createDOMPopup = useCallback(() => {
     // Entferne existierendes Popup
     const existingPopup = document.getElementById('print-popup-dom');
     if (existingPopup) {
@@ -581,7 +499,7 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
     };
 
     console.log('✅ DOM-Popup erstellt und Event-Listener hinzugefügt');
-  };
+  }, [printData]);
 
   // Tatsächlichen Druck ausführen - HTML-VERSION
   const executeActualPrint = async () => {
@@ -791,6 +709,58 @@ const HeaderBar = ({ count, onNeu, eintraege, onFilterChange }) => {
     } catch (error) {
       console.error('Fehler beim Erstellen der Druckvorschau:', error);
       alert('❌ Fehler beim Erstellen der Druckvorschau.');
+    }
+  };
+
+  // Tatsächlichen Druck ausführen - EXCEL-VERSION (NEU)
+  const executeActualPrintExcel = async () => {
+    try {
+      // Aktuelles Datum für Dateinamen
+      const heute = new Date();
+      const dateString = `${heute.getDate().toString().padStart(2, '0')}-${(heute.getMonth() + 1).toString().padStart(2, '0')}-${heute.getFullYear()}`;
+      
+      // Workbook erstellen
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Druckvorschau');
+      
+      // Spaltenbreiten anpassen
+      worksheet.columns = [
+        { width: 10 }, // Dummy-Spalte für Position
+        { width: 15 }, // Datum
+        { width: 10 }, // Uhrzeit
+        { width: 25 }, // Bewerber
+        { width: 10 }, // Art
+      ];
+      
+      // Headerzeile hinzufügen
+      worksheet.addRow(['', 'Datum', 'Uhrzeit', 'Bewerber', 'Art']).font = { bold: true };
+      
+      // Datenzeilen hinzufügen
+      printData.forEach((row, index) => {
+        const date = formatDate(row.OriginalDate);
+        const time = row.Uhrzeit;
+        const bewerber = row.Bewerber;
+        const art = row.Art;
+        
+        worksheet.addRow([index + 1, date, time, bewerber, art]);
+      });
+      
+      // Autofilter aktivieren
+      worksheet.autoFilter = 'A1:E1';
+      
+      // Datei speichern und Download auslösen
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Termine_Druckvorschau_${dateString}.xlsx`;
+      link.click();
+      window.URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error('Fehler beim Erstellen der Excel-Druckvorschau:', error);
+      alert('❌ Fehler beim Erstellen der Excel-Druckvorschau.');
     }
   };
 
@@ -1041,6 +1011,8 @@ const filterOptions = [
 ];
 const statusOptions = ['Offen', 'Status 1', 'Status 2', 'Status 3', 'Status 4'];
 const filialeOptions = ['Fil01','Fil02','Fil03','Fil05','Fil06','Fil07','Fil08','Fil09','Fil10','Fil13','Fil15'];
+
+
 
 export default HeaderBar;
 

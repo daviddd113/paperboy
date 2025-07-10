@@ -156,7 +156,7 @@ const BewerberFormStep1 = ({ formData, handleChange, onChangeStep, currentStep }
       setTempGrund(formData.grundTermin);
       setShowPopup(true);
     }
-  }, [formData.grundTermin]);
+  }, [formData.grundTermin, tempGrund]);
 
   const handleCancel = () => {
     setShowPopup(false);

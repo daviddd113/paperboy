@@ -45,7 +45,6 @@ function AufenthaltstitelPopup({ open, onClose, onSave }) {
 }
 
 function AsylStatusPopup({ open, onClose, onSave }) {
-  const [status, setStatus] = useState('');
   const [gueltigBis, setGueltigBis] = useState('');
   const [ausgestellt, setAusgestellt] = useState('');
   if (!open) return null;
@@ -59,7 +58,7 @@ function AsylStatusPopup({ open, onClose, onSave }) {
           <label style={{ fontWeight: 600, fontSize: '0.9rem', marginTop: 10 }}>AUSGESTELLT</label>
           <input type="date" value={ausgestellt} onChange={e => setAusgestellt(e.target.value)} style={{ width: '100%', fontSize: '1rem', height: 28 }} />
         </div>
-        <button onClick={() => onSave && onSave({ status, gueltigBis, ausgestellt })} style={{ marginTop: 24, background: '#2684ff', color: '#fff', border: 'none', borderRadius: 4, fontSize: 15, fontWeight: 600, padding: '8px 0', cursor: 'pointer' }}>Speichern</button>
+        <button onClick={() => onSave && onSave({ gueltigBis, ausgestellt })} style={{ marginTop: 24, background: '#2684ff', color: '#fff', border: 'none', borderRadius: 4, fontSize: 15, fontWeight: 600, padding: '8px 0', cursor: 'pointer' }}>Speichern</button>
       </div>
     </div>
   );
@@ -488,9 +487,9 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
                 <AsylStatusPopup 
                   open={showAsylStatusPopup} 
                   onClose={() => setShowAsylStatusPopup(false)} 
-                  onSave={({ status, gueltigBis, ausgestellt }) => {
+                  onSave={({ gueltigBis, ausgestellt }) => {
                     const heute = new Date().toISOString().slice(0, 10);
-                    setAsylStatusList(list => [...list, { status, gueltigBis, ausgestellt, erstellt: heute }]);
+                    setAsylStatusList(list => [...list, { gueltigBis, ausgestellt, erstellt: heute }]);
                     setShowAsylStatusPopup(false);
                   }} 
                 />
