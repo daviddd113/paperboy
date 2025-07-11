@@ -73,12 +73,12 @@ const BewerberTabelle = ({ eintraege, selectedId, onSelect }) => {
                     // Normale Border-Farben
                     return stepColors[step - 1];
                   })()}`,
-                  width: 28,
-                  height: 28,
-                  fontSize: '1.15rem',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                    width: 28,
+                    height: 28,
+                    fontSize: '1.15rem',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}>{eintrag.step || 1}</span>
               </td>
               <td style={{width:80}}>{eintrag.filiale || ''}</td>
