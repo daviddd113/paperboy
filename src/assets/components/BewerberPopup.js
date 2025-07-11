@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 
 const tabs = [
   'STAMMDATEN',
-  'ERREICHBAR',
   'FINANZDATEN',
   'FILIALDATEN',
   'AUFENTHALT',
   'KENNZEICHEN'
+];
+
+const countryOptions = [
+  "Deutschland", "Österreich", "Schweiz", "Frankreich", "Italien", "Spanien", "Portugal", "Niederlande", "Belgien", "Luxemburg", "Dänemark", "Norwegen", "Schweden", "Finnland", "Polen", "Tschechien", "Ungarn", "Slowakei", "Slowenien", "Kroatien", "Rumänien", "Bulgarien", "Griechenland", "Türkei", "Russland", "Ukraine", "Serbien", "Bosnien und Herzegowina", "Montenegro", "Albanien", "Kosovo", "Mazedonien", "Estland", "Lettland", "Litauen", "Irland", "Vereinigtes Königreich", "Island", "Malta", "Zypern", "USA", "Kanada", "Mexiko", "Brasilien", "Argentinien", "Chile", "China", "Japan", "Südkorea", "Indien", "Australien", "Neuseeland", "Südafrika", "Ägypten", "Marokko", "Tunesien", "Israel", "Saudi-Arabien", "Vereinigte Arabische Emirate", "Singapur", "Thailand", "Vietnam", "Indonesien", "Malaysia", "Philippinen", "Pakistan", "Bangladesch", "Sri Lanka", "Nepal", "Afghanistan", "Iran", "Irak", "Syrien", "Libanon", "Jordanien", "Kuwait", "Katar", "Oman", "Jemen", "Mongolei", "Kasachstan", "Usbekistan", "Turkmenistan", "Kirgisistan", "Tadschikistan", "Georgien", "Armenien", "Aserbaidschan", "Moldawien", "Weißrussland", "Venezuela", "Kolumbien", "Peru", "Ecuador", "Bolivien", "Paraguay", "Uruguay", "Guyana", "Suriname", "Trinidad und Tobago", "Costa Rica", "Panama", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Jamaika", "Kuba", "Dominikanische Republik", "Haiti", "Bahamas", "Barbados", "Grenada", "St. Lucia", "St. Vincent und die Grenadinen", "Antigua und Barbuda", "St. Kitts und Nevis", "Dominica", "Belize", "Fidschi", "Papua-Neuguinea", "Samoa", "Tonga", "Vanuatu", "Salomonen", "Kiribati", "Tuvalu", "Nauru", "Palau", "Marshallinseln", "Mikronesien", "Brunei", "Laos", "Kambodscha", "Myanmar", "Nordkorea", "Timor-Leste", "Madagaskar", "Kenia", "Uganda", "Tansania", "Ruanda", "Burundi", "Sambia", "Simbabwe", "Botswana", "Namibia", "Mosambik", "Angola", "Kongo", "Demokratische Republik Kongo", "Gabun", "Äquatorialguinea", "Kamerun", "Nigeria", "Ghana", "Elfenbeinküste", "Liberia", "Sierra Leone", "Guinea", "Guinea-Bissau", "Senegal", "Gambia", "Mali", "Burkina Faso", "Niger", "Tschad", "Zentralafrikanische Republik", "Süd-Sudan", "Eritrea", "Äthiopien", "Somalia", "Dschibuti", "Mauretanien", "West-Sahara", "Kap Verde", "Komoren", "Seychellen", "Mauritius", "Malawi", "Lesotho", "Swasiland", "Benin", "Togo"
 ];
 
 function AufenthaltstitelPopup({ open, onClose, onSave }) {
@@ -187,6 +190,48 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
                   <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>BEMERKUNG</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22 }} />
                 </div>
+                {/* Felder aus "Erreichbar" */}
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14, marginTop: 50 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>TEL 1</label>
+                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>TEL 2</label>
+                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>FAX</label>
+                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>EMAIL</label>
+                  <input style={{ width: 180, fontSize: '0.8rem', height: 22, textDecoration: 'underline', color: '#2684ff' }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>LAND</label>
+                  <select style={{ width: 260, fontSize: '0.9rem', height: 32, background: '#fff', color: '#222', border: '1px solid #ccc', borderRadius: 4, paddingLeft: 8 }}>
+                    <option value="">Bitte wählen</option>
+                    {countryOptions.map(country => (
+                      <option key={country} value={country}>{country}</option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>PLZ</label>
+                  <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>ORT</label>
+                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>STRASSE</label>
+                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 14 }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90, marginTop: 2, marginBottom: 50 }}>BEMERKUNG</label>
+                  <input style={{ width: 220, fontSize: '0.8rem', height: 40 }} />
+                </div>
               </div>
               <div style={{ minWidth: 260, flex: 1 }}>
                 <div style={{ fontWeight: 700, color: '#888', marginBottom: 14, fontSize: '0.8rem' }}>IDENTITÄT</div>
@@ -210,99 +255,63 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
                   <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>AUSSTELLUNGSORT</label>
                   <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
                 </div>
+                {/* --- ZUSTELLADRESSE Block jetzt hier --- */}
+                <div style={{ marginTop: 32 }}>
+                  <div style={{ fontWeight: 700, color: '#888', marginBottom: 14, fontSize: '0.9rem' }}>ZUSTELLADRESSE</div>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>LAND</label>
+                    <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>PLZ</label>
+                    <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>ORT</label>
+                    <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>STRASSE</label>
+                    <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 14 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90, marginTop: 2 }}>BEMERKUNG</label>
+                    <input style={{ width: 220, fontSize: '0.8rem', height: 40 }} />
+                  </div>
+                </div>
               </div>
             </div>
           )}
           {activeTab === 1 && (
-            <div style={{ display: 'flex', gap: 32 }}>
-              <div style={{ minWidth: 340 }}>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>TEL 1</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>TEL 2</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>FAX</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>EMAIL</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22, textDecoration: 'underline', color: '#2684ff' }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>LAND</label>
-                  <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>PLZ</label>
-                  <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>ORT</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>STRASSE</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-              </div>
-              <div style={{ minWidth: 260, flex: 1 }}>
-                <div style={{ fontWeight: 700, color: '#888', marginBottom: 14, fontSize: '0.9rem', marginTop: 8 }}>ZUSTELLADRESSE</div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>LAND</label>
-                  <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>PLZ</label>
-                  <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>ORT</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>STRASSE</label>
-                  <input style={{ width: 180, fontSize: '0.8rem', height: 22 }} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90, marginTop: 2 }}>BEMERKUNG</label>
-                  <input style={{ width: 220, fontSize: '0.8rem', height: 40 }} />
-                </div>
-              </div>
-            </div>
-          )}
-          {activeTab === 2 && (
+            // FINANZDATEN
             <div style={{ display: 'flex', gap: 32 }}>
               <div style={{ minWidth: 340, flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 80 }}>MELDEDATEN</label>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>MELDEDATEN</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22 }} />
                   <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 70, marginLeft: 10 }}>MELDEDATEN AM</label>
                   <input type="date" style={{ width: 120, fontSize: '0.8rem', height: 22, marginLeft: 16 }} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 80 }}>BANK</label>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>BANK</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22 }} />
                   <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 30, marginLeft: 10 }}>BLZ</label>
                   <input style={{ width: 120, fontSize: '0.8rem', height: 22 }} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 80 }}>KONTONR.</label>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>KONTONR.</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22 }} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 80 }}>IBAN</label>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>IBAN</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22 }} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 80 }}>BIC</label>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>BIC</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22 }} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
-                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 80 }}>UID</label>
+                  <label style={{ fontWeight: 600, fontSize: '0.8rem', minWidth: 90 }}>UID</label>
                   <input style={{ width: 220, fontSize: '0.8rem', height: 22, marginBottom: 18 }} />
                 </div>
                 {/* Neue Felder mit großem Abstand darunter */}
@@ -372,7 +381,8 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
               </div>
             </div>
           )}
-          {activeTab === 3 && (
+          {activeTab === 2 && (
+            // FILIALDATEN
             <div style={{ display: 'flex', gap: 80, marginTop: 24 }}>
               <div>
                 <div style={{ color: '#888', fontWeight: 600, fontSize: '1rem', marginBottom: 6, letterSpacing: 0.5 }}>UNADRESSIERTE FILIALEN</div>
@@ -396,7 +406,8 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
               </div>
             </div>
           )}
-          {activeTab === 4 && (
+          {activeTab === 3 && (
+            // AUFENTHALT
             <div style={{ width: '100%', marginTop: 8 }}>
               {/* Aufenthaltstitel Tabelle */}
               <div style={{ marginBottom: 32, position: 'relative' }}>
@@ -496,7 +507,8 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
               </div>
             </div>
           )}
-          {activeTab === 5 && (
+          {activeTab === 4 && (
+            // KENNZEICHEN
             <div style={{ width: '100%', marginTop: 8 }}>
               <div style={{ marginBottom: 32, position: 'relative' }}>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
@@ -542,7 +554,7 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
               </div>
             </div>
           )}
-          {activeTab !== 0 && activeTab !== 1 && activeTab !== 2 && activeTab !== 3 && activeTab !== 4 && activeTab !== 5 && (
+          {activeTab !== 0 && activeTab !== 1 && activeTab !== 2 && activeTab !== 3 && activeTab !== 4 && (
             <div style={{ color: '#888', fontSize: '1.1rem', textAlign: 'center', marginTop: 80 }}>
               Noch kein Inhalt für diesen Reiter.
             </div>
@@ -552,5 +564,6 @@ const BewerberPopup = ({ open, onClose, onSave, initialNr }) => {
     </div>
   );
 };
+
 
 export default BewerberPopup;
